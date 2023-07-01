@@ -5,6 +5,14 @@ export function getMonthAndYearOnly(date) {
   return `${month} ${year}`;
 }
 
+export function getMonthDateAndYearOnly(date) {
+  const dateObj = new Date(date);
+  const month = dateObj.toLocaleString("default", { month: "long" });
+  const day = dateObj.getDate();
+  const year = dateObj.getFullYear();
+  return `${month} ${day}, ${year}`;
+}
+
 export function getAgeRatingColor(ageRating) {
   if (ageRating >= 18) {
     return "badge-error"; // Set the appropriate color class for 18+
