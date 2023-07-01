@@ -15,7 +15,10 @@ const MovieCard = ({ movie }) => {
   };
 
   return (
-    <div className='card bg-base-100 shadow-xl relative' onClick={handleClick}>
+    <div
+      className='card bg-base-100 shadow-xl relative cursor-pointer'
+      onClick={handleClick}
+    >
       <figure className='relative group'>
         <img src={movie.poster_url} alt={movie.title} />
         <div

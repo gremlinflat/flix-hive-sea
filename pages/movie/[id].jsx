@@ -1,18 +1,22 @@
 import React from "react";
-import { useRouter } from "next/router";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 import fetcher from "@/utils/fetcher";
 import DashboardShell from "@/components/DashboardShell";
 import LoadingState from "@/components/LoadingState";
-import Image from "next/image";
 import { getMonthDateAndYearOnly } from "@/utils/utils";
+
 const MovieScreen = ({ id }) => {
   const router = useRouter();
   const identifier = router.query.id;
   const { data } = useSWR(`/api/movie/${identifier}`, fetcher);
 
   if (!data) {
-    return <LoadingState />;
+    return (
+      <DashboardShell>
+        <LoadingState />
+      </DashboardShell>
+    );
   }
 
   const {
@@ -30,7 +34,7 @@ const MovieScreen = ({ id }) => {
         <div className='flex flex-col md:flex-row'>
           <div className='md:w-1/3'>
             <div className='rounded-lg overflow-hidden mb-6'>
-              <Image src={poster_url} alt={title} width={600} height={900} />
+              <img src={poster_url} alt={title} width={600} height={900} />
             </div>
             <div className='flex items-center mb-2'>
               <span className='bg-success text-white px-2 py-1 rounded font-bold text-sm'>
