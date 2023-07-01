@@ -1,4 +1,3 @@
-import Image from "next/image";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import DashboardShell from "@/components/DashboardShell";

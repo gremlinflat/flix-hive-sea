@@ -8,7 +8,7 @@ export default async (req, res) => {
     const movie = data.filter(
       (movie) => generateMovieIdentifier(movie) === identifier
     );
-    res.status(200).json(movie);
+    res.status(200).json(movie[0]);
   } catch (error) {
     res.status(500).json({ error });
   }

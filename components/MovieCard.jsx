@@ -11,7 +11,7 @@ const MovieCard = ({ movie }) => {
 
   const handleClick = () => {
     const movieId = generateMovieIdentifier(movie);
-    router.push(`/api/movie/${movieId}`);
+    router.push(`/movie/${movieId}`);
   };
 
   return (
