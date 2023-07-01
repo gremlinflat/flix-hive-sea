@@ -4,10 +4,10 @@ import Footer from "./Footer";
 
 const DashboardShell = ({ children }) => {
   return (
-    <div className='container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 content-center'>
+    <div className='container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 content-center min-h-screen'>
       <NavBar />
-      <div className='container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='py-8'>{children}</div>
+      <div className='mx-auto min-h-[80vh] flex flex-col items-center justify-center w-full h-full'>
+        {children}
       </div>
       <Footer />
     </div>
