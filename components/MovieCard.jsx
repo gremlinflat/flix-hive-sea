@@ -1,10 +1,11 @@
 import React from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
 import {
   getMonthAndYearOnly,
   getAgeRatingColor,
   generateMovieIdentifier,
 } from "@utils/utils";
-import { useRouter } from "next/router";
 
 const MovieCard = ({ movie }) => {
   const router = useRouter();
@@ -20,11 +21,18 @@ const MovieCard = ({ movie }) => {
       onClick={handleClick}
     >
       <figure className='relative group'>
-        <img src={movie.poster_url} alt={movie.title} />
+        <Image
+          src={movie.poster_url}
+          alt={movie.title}
+          width={0}
+          height={0}
+          sizes='100vw'
+          style={{ width: "100%", height: "auto" }}
+        />
         <div
-          className={`badge ${getAgeRatingColor(
+          className={`badge badge-${getAgeRatingColor(
             movie.age_rating
-          )} absolute top-2 right-2 text-md font-bold`}
+          )} badge-s absolute top-2 right-2 text-md font-bold`}
         >
           {movie.age_rating}+
         </div>

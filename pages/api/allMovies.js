@@ -1,4 +1,4 @@
-export default async (req, res) => {
+const handler = async (req, res) => {
   let URL = "https://seleksi-sea-2023.vercel.app/api/movies";
   try {
     const data = await fetch(URL).then((response) => response.json());
@@ -7,3 +7,5 @@ export default async (req, res) => {
     res.status(500).json({ error });
   }
 };
+
+export default handler;

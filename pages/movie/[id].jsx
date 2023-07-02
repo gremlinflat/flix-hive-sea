@@ -1,10 +1,11 @@
 import React from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import fetcher from "@/utils/fetcher";
 import DashboardShell from "@/components/DashboardShell";
 import LoadingState from "@/components/LoadingState";
-import { getMonthDateAndYearOnly } from "@/utils/utils";
+import { getAgeRatingColor, getMonthDateAndYearOnly } from "@/utils/utils";
 import SeatPicker from "@/components/SeatPicker";
 import RecentOrder from "@/components/RecentOrder";
 
@@ -36,13 +37,25 @@ const MovieScreen = ({ id }) => {
         <div className='flex flex-col md:flex-row'>
           <div className='md:w-1/3 mb-4 md:mb-0 md:ml-4'>
             <div className=' overflow-hidden flex items-center justify-center'>
-              <img className='rounded-lg' src={poster_url} alt={title} />
+              <Image
+                className='rounded-lg'
+                src={poster_url}
+                alt={title}
+                width={0}
+                height={0}
+                sizes='100vw'
+                style={{ width: "100%", height: "auto" }}
+              />
             </div>
             <div className='flex items-center mt-4'>
-              <span className='bg-success text-white px-2 py-1 rounded font-bold text-sm'>
+              <div
+                className={`bg-${getAgeRatingColor(
+                  age_rating
+                )} text-white px-2 py-1 rounded font-bold text-sm`}
+              >
                 {age_rating}+
-              </span>
-              <p className='text-gray-300 md:text-xl text-md font-medium ml-4'>
+              </div>
+              <p className='text-gray-300 md:text-l text-md font-medium ml-4'>
                 Released on {getMonthDateAndYearOnly(release_date)}
               </p>
             </div>

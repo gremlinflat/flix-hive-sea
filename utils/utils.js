@@ -14,12 +14,13 @@ export function getMonthDateAndYearOnly(date) {
 }
 
 export function getAgeRatingColor(ageRating) {
+  const ageRatingInt = parseInt(ageRating);
   if (ageRating >= 18) {
-    return "badge-error"; // Set the appropriate color class for 18+
+    return "error";
   } else if (ageRating >= 13) {
-    return "badge-warning"; // Set the appropriate color class for 13+
+    return "warning";
   } else {
-    return "badge-success"; // Set the appropriate color class for PG or other ratings
+    return "success";
   }
 }
 
