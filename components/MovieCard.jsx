@@ -17,8 +17,8 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div
-      className='card bg-base-100 shadow-xl relative cursor-pointer'
-      onClick={handleClick}
+      className='card bg-base-100 shadow-xl relative'
+      // onClick={handleClick}
     >
       <figure className='relative group'>
         <Image
@@ -59,7 +59,9 @@ const MovieCard = ({ movie }) => {
           </div>
           <div className='text-sm'>per ticket</div>
         </div>
-        <button className='btn btn-primary'>Book Now</button>
+        <button className='btn btn-primary' onClick={handleClick}>
+          Book Now
+        </button>
       </div>
     </div>
   );

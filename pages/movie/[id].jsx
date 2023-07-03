@@ -76,7 +76,7 @@ const MovieScreen = ({ id }) => {
         </div>
         <div className='mt-8'>
           <h2 className='lg:text-3xl text-2xl font-bold mb-4'>Seat Picker</h2>
-          <SeatPicker />
+          <SeatPicker ticket_price={ticket_price} />
         </div>
         <div className='mt-8'>
           <h2 className='lg:text-3xl text-2xl font-bold mb-4'>Recent Orders</h2>
