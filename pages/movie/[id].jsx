@@ -9,7 +9,7 @@ import { getAgeRatingColor, getMonthDateAndYearOnly } from "@/utils/utils";
 import SeatPicker from "@/components/SeatPicker";
 import RecentOrder from "@/components/RecentOrder";
 
-const MovieScreen = ({ id }) => {
+const MovieScreen = () => {
   const router = useRouter();
   const identifier = router.query.id;
   const { data } = useSWR(`/api/movie/${identifier}`, fetcher);
@@ -80,7 +80,7 @@ const MovieScreen = ({ id }) => {
         </div>
         <div className='mt-8'>
           <h2 className='lg:text-3xl text-2xl font-bold mb-4'>Recent Orders</h2>
-          {/* <RecentOrder /> */}
+          <RecentOrder />
         </div>
       </div>
     </DashboardShell>

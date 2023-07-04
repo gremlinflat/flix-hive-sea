@@ -1,61 +1,56 @@
 import React from "react";
+import RecentOrderCell from "./RecentOrderCell";
 
 const RecentOrder = () => {
+  // const orders = [];
+  const orders = [
+    {
+      id: "1",
+      customerName: "Joh saifuiasf asfj asn",
+      movieTitle: "Movie A",
+      date: "2023-07-01",
+      seat: "A2, s2, asf 2, 2,2  2f",
+      quantity: 6,
+      price: 16000,
+    },
+    {
+      id: "2",
+      customerName: "Jane",
+      movieTitle: "Movie B",
+      date: "2023-07-02",
+      seat: "B4",
+      quantity: 3,
+      price: 12000,
+    },
+  ];
+
   return (
     <div className='w-full'>
-      <div className='bg-white shadow-md rounded my-6 overflow-x-auto'>
-        <table className='min-w-max w-full table-auto'>
-          <thead>
-            <tr className='bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
-              <th className='py-3 px-4 md:px-6 text-left'>Order ID</th>
-              <th className='py-3 px-4 md:px-6 text-left'>Customer Name</th>
-              <th className='py-3 px-4 md:px-6 text-center'>Movie Title</th>
-              <th className='py-3 px-4 md:px-6 text-center'>Date</th>
-              <th className='py-3 px-4 md:px-6 text-center'>Quantity</th>
-              <th className='py-3 px-4 md:px-6 text-center'>Total Price</th>
-              <th className='py-3 px-4 md:px-6 text-center'>Status</th>
-            </tr>
-          </thead>
-          <tbody className='text-gray-600 text-sm font-light'>
-            <tr className='border-b border-gray-200 hover:bg-gray-100'>
-              <td className='py-3 px-4 md:px-6 text-left whitespace-nowrap'>
-                <div className='flex items-center'>
-                  <span>1</span>
-                </div>
-              </td>
-              <td className='py-3 px-4 md:px-6 text-left'>
-                <div className='flex items-center'>
-                  <span>John Doe</span>
-                </div>
-              </td>
-              <td className='py-3 px-4 md:px-6 text-center'>
-                <div className='flex items-center justify-center'>
-                  <span>Avengers: Endgame</span>
-                </div>
-              </td>
-              <td className='py-3 px-4 md:px-6 text-center'>
-                <div className='flex items-center justify-center'>
-                  <span>2021-08-01</span>
-                </div>
-              </td>
-              <td className='py-3 px-4 md:px-6 text-center'>
-                <div className='flex items-center justify-center'>
-                  <span>2</span>
-                </div>
-              </td>
-              <td className='py-3 px-4 md:px-6 text-center'>
-                <div className='flex items-center justify-center'>
-                  <span>IDR 100.000</span>
-                </div>
-              </td>
-              <td className='py-3 px-4 md:px-6 text-center'>
-                <span className='bg-purple-200 text-purple-600 py-1 px-2 md:px-3 rounded-full text-xs'>
-                  Approved
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className='shadow-md rounded-lg my-6'>
+        <div className='shadow-md rounded my-6 overflow-x-auto'>
+          <table className='table table-zebra table-auto'>
+            <thead>
+              <tr>
+                <th className='font-semibold text-sm'>Order ID</th>
+                <th className='font-semibold text-sm'>Cust. Name</th>
+                <th className='font-semibold text-sm'>Seat</th>
+                <th className='font-semibold text-sm'>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {!orders && (
+                <tr>
+                  <td colSpan='6' className='text-center text-lg font-bold'>
+                    No orders yet, be the first one!
+                  </td>
+                </tr>
+              )}
+              {orders.map((order) => (
+                <RecentOrderCell key={order.id} order={order} />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

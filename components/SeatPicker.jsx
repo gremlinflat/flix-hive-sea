@@ -65,7 +65,9 @@ const SeatPicker = ({ ticket_price }) => {
           <tbody className=' text-sm font-light'>
             {rows.map((row) => (
               <tr key={row} className='hover:bg-gray-100 hover:bg-opacity-5'>
-                <td className='py-3 px-6 text-left font-semibold'>{row}</td>
+                <td className='w-fit sm:px-1 sm:py-3 sm:w-12 md:px-6 text-left font-semibold'>
+                  {row}
+                </td>
                 {columns.map((column, index) => (
                   <SeatCell
                     key={`${row}${index}`}
@@ -80,12 +82,14 @@ const SeatPicker = ({ ticket_price }) => {
           </tbody>
           <tfoot>
             <tr className='uppercase text-sm leading-normal'>
-              <th className='py-3 px-6 text-left'>{""}</th>
+              <th className='py-3 min-w-0 sm:px-2 sm:w-12 md:px-6 text-left'>
+                {""}
+              </th>
               {columns.map((column, index) => (
                 <th
                   key={`${column}${index}`}
-                  className={`py-3 px-6 text-center ${
-                    column === "gap" ? "w-12" : ""
+                  className={`px-1 py-3 text-center w-fit sm:min-w-12 ${
+                    column === "gap" ? "w-1 md:w-12" : ""
                   }`}
                 >
                   {column !== "gap" && column}
@@ -101,7 +105,10 @@ const SeatPicker = ({ ticket_price }) => {
           {selectedSeats.length > 0 && (
             <>
               <div className='font-light'>
-                Selected Seats: {selectedSeats.join(", ")}
+                Seats:{" "}
+                <span className='text-secondary font-medium'>
+                  {selectedSeats.join(", ")}
+                </span>
               </div>
               <div className='font-light'>
                 Total:{" "}
