@@ -19,7 +19,7 @@ const SeatPicker = ({ ticket_price }) => {
   const toggleSeatSelection = (row, column) => {
     const seat = `${row}${column}`;
     if (selectedSeats.length === 6 && !isSeatSelected(row, column)) {
-      setAlertMessage("You can only buy up to 6 tickets.");
+      setAlertMessage("Oops! You can only select up to 6 seats.");
       setAlertType("warning");
       setShowAlert(true);
       return;
@@ -58,7 +58,7 @@ const SeatPicker = ({ ticket_price }) => {
   return (
     <div className='w-full'>
       <div className=' shadow-md rounded-lg my-6'>
-        <div className='bg-primary mb-8 rounded-lg'>
+        <div className='bg-primary mb-8 md:rounded-b-lg rounded-b-md'>
           <h2 className='text-white text-center font-bold p-2'>SCREEN</h2>
         </div>
         <table className='w-full table-auto rounded-lg'>

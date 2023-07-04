@@ -13,7 +13,7 @@ const SeatCell = ({ row, column, isSeatSelected, toggleSeatSelection }) => {
             isSeatSelected(row, column)
               ? "bg-green-200 text-green-600"
               : "bg-red-200 text-red-600"
-          } py-2 px-0 w-full sm:px-3 rounded-sm text-xs cursor-pointer flex items-center justify-center`}
+          } py-2 px-0 w-full sm:px-3 rounded-sm md:rounded-lg text-xs cursor-pointer flex items-center justify-center`}
           onClick={() => toggleSeatSelection(row, column)}
         >
           {row}

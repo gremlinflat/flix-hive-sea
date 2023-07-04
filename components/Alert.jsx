@@ -13,12 +13,14 @@ const Alert = ({ type, message, show, onClose }) => {
 
   return (
     show && (
-      <div
-        className={`alert alert-${type} fixed top-4 w-fit right-4 px-4 py-3 rounded shadow-md animate-flyin`}
-        role='alert'
-      >
-        {alertIcon(type)}
-        <span>{message}</span>
+      <div className='toast toast-top toast-end'>
+        <div
+          className={`alert alert-${type} px-4 py-3 rounded-xl shadow-md animate-flyin`}
+          role='alert'
+        >
+          {alertIcon(type)}
+          <span className='font-semibold'>{message}</span>
+        </div>
       </div>
     )
   );

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className='footer footer-center p-5 bg-base-300 text-base-content'>
+    <footer className='footer footer-center p-5 bg-base-300 text-base-content rounded-t-2xl shadow-xl'>
       <div className='py-0 gap-1'>
         <p className='text-sm'>
           Copyright © 2023 FlixHive - Some right reserved.
