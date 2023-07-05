@@ -3,17 +3,12 @@ import SeatCell from "./SeatCell";
 import { useAuth } from "@/lib/auth";
 import { useAlert } from "@/lib/alert";
 
-const SeatPicker = ({
-  ticket_price,
-  min_age,
-  movie_id,
-  ticket_data,
-  onCheckout,
-}) => {
+const SeatPicker = ({ movie, movie_id, ticket_data, onCheckout }) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const { getUserToken, userProfile, refreshUserProfile } = useAuth();
 
   const { showAlertMessage } = useAlert();
+  // const { ticket_price, min_age, movie_id, movie_name } = movie;
 
   const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const columns = ["1", "2", "gap", "3", "4", "5", "6", "gap", "7", "8"];
@@ -45,6 +40,10 @@ const SeatPicker = ({
   };
 
   const handleBuyTicket = async () => {
+    const min_age = parseInt(movie.min_age) ?? 0;
+    const ticket_price = parseInt(movie.ticket_price) ?? 0;
+    const total = selectedSeats.length * ticket_price;
+
     if (selectedSeats.length > 6) {
       showAlertMessage("Oops! You can only select up to 6 seats.", "warning");
       return;
@@ -58,7 +57,7 @@ const SeatPicker = ({
       return;
     }
 
-    if (userProfile?.credit < selectedSeats.length * ticket_price) {
+    if (userProfile?.credit < total) {
       showAlertMessage(
         "Oops! You do not have enough credit to purchase this ticket.",
         "warning"
@@ -81,7 +80,8 @@ const SeatPicker = ({
       body: JSON.stringify({
         seats: selectedSeats,
         price: ticket_price,
-        total: selectedSeats.length * ticket_price,
+        total: total,
+        movie_title: movie.title,
       }),
       headers: new Headers({
         "Content-Type": "application/json",
@@ -161,7 +161,7 @@ const SeatPicker = ({
               <div className='font-light'>
                 Total:{" "}
                 <span className=' text-secondary font-bold'>
-                  IDR {selectedSeats.length * ticket_price}
+                  IDR {selectedSeats.length * parseInt(movie.ticket_price)}
                 </span>
               </div>
             </>

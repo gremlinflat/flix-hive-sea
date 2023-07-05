@@ -4,7 +4,6 @@ import { auth } from "@/lib/firebase-admin";
 const handler = async (req, res) => {
   try {
     const { token } = req.headers;
-    console.log(token);
     const { uid } = await auth.verifyIdToken(token);
     const age = await updateAge(uid, req.body.age);
     res.status(200).json(age);

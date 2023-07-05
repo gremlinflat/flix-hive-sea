@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import useSWR from "swr";
+import { useRouter } from "next/router";
 import { HiMiniTicket } from "react-icons/hi2";
 import { BsFillCreditCard2FrontFill } from "react-icons/bs";
 import { BiArrowFromBottom, BiArrowToBottom, BiLogOut } from "react-icons/bi";
@@ -24,6 +23,7 @@ const NavBar = () => {
   } = useAuth();
 
   const { showAlertMessage } = useAlert();
+  const router = useRouter();
 
   const handleLogout = () => {
     signout();
@@ -110,6 +110,10 @@ const NavBar = () => {
     setUserProfile({ ...userProfile, age: newAge });
   };
 
+  const handleBookedTickets = () => {
+    router.push("/history");
+  };
+
   return (
     <>
       <div className='navbar bg-base-100 shadow-xl rounded-b-2xl '>
@@ -157,7 +161,11 @@ const NavBar = () => {
               </div>
               <div className='dropdown dropdown-end'>
                 <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
-                  <img className='h-8 w-8 rounded-full' src={user.photoUrl} />
+                  <img
+                    className='h-8 w-8 rounded-full'
+                    src={user.photoUrl}
+                    alt='Profile'
+                  />
                 </label>
                 <ul
                   tabIndex={0}
@@ -169,6 +177,14 @@ const NavBar = () => {
                       onClick={() => window.modal_3.showModal()}
                     >
                       Update Age
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className='p-3 text-center w-full rounded-lg mb-2 font-semibold'
+                      onClick={handleBookedTickets}
+                    >
+                      Booked Tickets
                     </button>
                   </li>
                   <li>
