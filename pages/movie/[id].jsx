@@ -13,7 +13,7 @@ const MovieScreen = () => {
   const router = useRouter();
   const identifier = router.query.id;
   const { data } = useSWR([`/api/movie/${identifier}`, null], fetcher);
-  const { data: ticketData } = useSWR(
+  const { data: ticketData, mutate: mutateTicketData } = useSWR(
     [`/api/ticket/${identifier}`, null],
     fetcher
   );
@@ -34,6 +34,14 @@ const MovieScreen = () => {
     description,
     ticket_price,
   } = data;
+
+  const onCheckout = async () => {
+    const response = await fetch(`/api/ticket/${identifier}`).then((res) =>
+      res.json()
+    );
+    console.log(response);
+    mutateTicketData(response);
+  };
 
   return (
     <DashboardShell>
@@ -84,6 +92,8 @@ const MovieScreen = () => {
             ticket_price={ticket_price}
             movie_id={identifier}
             ticket_data={ticketData}
+            min_age={parseInt(age_rating)}
+            onCheckout={onCheckout}
           />
         </div>
         <div className='mt-8'>

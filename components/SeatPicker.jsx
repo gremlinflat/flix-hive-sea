@@ -3,9 +3,15 @@ import SeatCell from "./SeatCell";
 import { useAuth } from "@/lib/auth";
 import { useAlert } from "@/lib/alert";
 
-const SeatPicker = ({ ticket_price, movie_id, ticket_data }) => {
+const SeatPicker = ({
+  ticket_price,
+  min_age,
+  movie_id,
+  ticket_data,
+  onCheckout,
+}) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const { getUserToken } = useAuth();
+  const { getUserToken, userProfile, refreshUserProfile } = useAuth();
 
   const { showAlertMessage } = useAlert();
 
@@ -44,7 +50,31 @@ const SeatPicker = ({ ticket_price, movie_id, ticket_data }) => {
       return;
     }
 
-    //do checkout
+    if (userProfile?.age < min_age) {
+      showAlertMessage(
+        `Oops! You must be at least ${min_age} years old to purchase this ticket.`,
+        "warning"
+      );
+      return;
+    }
+
+    if (userProfile?.credit < selectedSeats.length * ticket_price) {
+      showAlertMessage(
+        "Oops! You do not have enough credit to purchase this ticket.",
+        "warning"
+      );
+      return;
+    }
+
+    // if user not login
+    if (!userProfile) {
+      showAlertMessage(
+        "Oops! You must login to purchase this ticket.",
+        "warning"
+      );
+      return;
+    }
+
     const userToken = await getUserToken();
     const result = await fetch(`/api/ticket/${movie_id}`, {
       method: "POST",
@@ -58,15 +88,16 @@ const SeatPicker = ({ ticket_price, movie_id, ticket_data }) => {
         token: userToken,
       }),
     });
-
-    //is it successful?
-    //if yes, show success alert
-    showAlertMessage("Ticket purchased successfully!", "success");
-
-    //if no, show error alert
-    // setAlertType("error");
-    // setAlertMessage("Something went wrong. Please try again.");
-    // setShowAlert(true);
+    if (!result) {
+      showAlertMessage("Something went wrong. Please try again.", "error");
+      return;
+    }
+    if (result) {
+      showAlertMessage("Ticket purchased successfully!", "success");
+      setSelectedSeats([]);
+    }
+    await refreshUserProfile();
+    await onCheckout();
   };
 
   const handleCloseAlert = () => {
