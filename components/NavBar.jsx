@@ -9,7 +9,7 @@ import { FaGithub } from "react-icons/fa";
 
 import Modal from "./Modal";
 import { useAuth } from "@/lib/auth";
-import fetcher from "@/utils/fetcher";
+import { useAlert } from "@/lib/alert";
 
 const NavBar = () => {
   const {
@@ -23,14 +23,19 @@ const NavBar = () => {
     setUserProfile,
   } = useAuth();
 
+  const { showAlertMessage } = useAlert();
+
   const handleLogout = () => {
     signout();
   };
 
-  const handleCredit = (val) => {
-    const newCredit = parseInt(userProfile?.credit) + parseInt(val);
-    if (newCredit < 0) {
-      alert("You don't have enough credit to do this action");
+  const handleDeposit = (val) => {
+    const amount = parseInt(val);
+    if (amount < 0) {
+      showAlertMessage(
+        "Oops! You can't deposit a negative amount. or non-integer value",
+        "warning"
+      );
       return;
     } //fail case
     fetch("/api/user/mutateCredit", {
@@ -40,10 +45,49 @@ const NavBar = () => {
         token: userToken,
       }),
       body: JSON.stringify({
-        credit: newCredit ?? 0,
+        amount: amount,
       }),
     });
-    setUserProfile({ ...userProfile, credit: newCredit });
+    setUserProfile({ ...userProfile, credit: userProfile.credit + amount });
+    showAlertMessage(
+      `You have successfully deposited ${amount} IDR.`,
+      "success"
+    );
+  };
+
+  const handleWithdraw = (val) => {
+    const amount = parseInt(val);
+    if (amount > userProfile.credit) {
+      showAlertMessage(
+        "Oops! You can't withdraw more than your current credit.",
+        "warning"
+      );
+      return;
+    }
+
+    if (amount > 500000) {
+      showAlertMessage(
+        "Oops! You can't withdraw more than IDR 500,000.",
+        "warning"
+      );
+      return;
+    }
+
+    fetch("/api/user/mutateCredit", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        token: userToken,
+      }),
+      body: JSON.stringify({
+        amount: amount * -1,
+      }),
+    });
+    setUserProfile({ ...userProfile, credit: userProfile.credit - amount });
+    showAlertMessage(
+      `You have successfully withdrawn ${amount} IDR.`,
+      "success"
+    );
   };
 
   const handleAge = (val) => {
@@ -177,12 +221,12 @@ const NavBar = () => {
       <Modal
         modal_id={"modal_1"}
         type={"credit-deposit"}
-        action={handleCredit}
+        action={handleDeposit}
       />
       <Modal
         modal_id={"modal_2"}
         type={"credit-withdraw"}
-        action={handleCredit}
+        action={handleWithdraw}
       />
       <Modal
         modal_id={"modal_3"}

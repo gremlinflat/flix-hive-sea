@@ -3,13 +3,7 @@ import React from "react";
 const CreditForms = ({ action, isDeposit, modalId }) => {
   const handleButtonClick = () => {
     const inputValue = document.querySelector(`#${modalId} #amount`).value;
-    if (inputValue === "") return;
-    if (!isDeposit) {
-      action(parseInt(inputValue) * -1);
-    } else {
-      console.log(inputValue);
-      action(inputValue);
-    }
+    action(inputValue);
   };
 
   return (

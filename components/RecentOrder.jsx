@@ -3,7 +3,7 @@ import RecentOrderCell from "./RecentOrderCell";
 
 const RecentOrder = ({ ticket_data }) => {
   return (
-    <div className='w-1/3'>
+    <div className='w-full md:w-1/2 lg:w-fit'>
       <div className='shadow-md rounded-lg my-6'>
         <div className='shadow-md rounded my-6 overflow-x-auto'>
           <table className='table table-zebra table-auto'>

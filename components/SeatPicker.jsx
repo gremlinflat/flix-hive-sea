@@ -100,13 +100,6 @@ const SeatPicker = ({
     await onCheckout();
   };
 
-  const handleCloseAlert = () => {
-    setShowAlert(false);
-  };
-
-  console.log("selectedSeats", selectedSeats);
-  console.log("ticket_data", ticket_data ?? "no ticket data");
-
   return (
     <div className='w-full'>
       <div className=' shadow-md rounded-lg my-6'>
@@ -155,7 +148,7 @@ const SeatPicker = ({
         </table>
       </div>
 
-      <div className='flex justify-end items-center px-5 py-5'>
+      <div className='flex justify-end items-center flex-wrap px-5 py-5'>
         <div className='px-5 py-3'>
           {selectedSeats.length > 0 && (
             <>
@@ -179,7 +172,7 @@ const SeatPicker = ({
             !selectedSeats.length > 0
               ? "disabled bg-gray-400 cursor-not-allowed"
               : "bg-secondary"
-          } ml-4 px-8 text-white font-bold py-3 rounded-lg text-l`}
+          } ml-4 px-8 text-white font-bold py-3 rounded-lg text-lg w-fit h-fit`}
           onClick={handleBuyTicket}
         >
           Buy Ticket

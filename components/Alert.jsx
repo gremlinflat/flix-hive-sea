@@ -15,13 +15,13 @@ const Alert = () => {
 
   return (
     showAlert && (
-      <div className='toast toast-top toast-end'>
+      <div className='toast toast-top toast-end mt-12'>
         <div
-          className={`alert alert-${alertType} px-4 py-3 rounded-xl shadow-md animate-flyin`}
+          className={`alert alert-${alertType} px-4 py-3 rounded-xl shadow-md animate-flyin w-full`}
           role='alert'
         >
           {alertIcon(alertType)}
-          <span className='font-semibold'>{alertMessage}</span>
+          <p className='font-semibold'>{alertMessage}</p>
         </div>
       </div>
     )
