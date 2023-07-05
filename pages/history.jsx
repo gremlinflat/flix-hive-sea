@@ -100,6 +100,7 @@ const UserTransaction = () => {
                   ) : (
                     usersHistory.map((ticket) => (
                       <TransactionCell
+                        key={ticket.id}
                         ticket={ticket}
                         onCancel={handleCancel}
                       />
