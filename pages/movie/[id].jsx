@@ -2,6 +2,8 @@ import React from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Head from "next/head";
+
 import fetcher from "@/utils/fetcher";
 import DashboardShell from "@/components/DashboardShell";
 import LoadingState from "@/components/LoadingState";
@@ -45,6 +47,9 @@ const MovieScreen = () => {
 
   return (
     <DashboardShell>
+      <Head>
+        <title>FlixHive - {title}</title>
+      </Head>
       <div className='bg-base-100 px-4 py-8 md:px-8 md:py-12'>
         <div className='flex flex-col md:flex-row'>
           <div className='md:w-1/3 mb-4 md:mb-0 md:ml-4'>

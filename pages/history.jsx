@@ -1,5 +1,6 @@
 import React from "react";
 import useSWR from "swr";
+import Head from "next/head";
 import fetcher from "@/utils/fetcher";
 import DashboardShell from "@/components/DashboardShell";
 import LoadingState from "@/components/LoadingState";
@@ -63,6 +64,9 @@ const UserTransaction = () => {
 
   return (
     <DashboardShell>
+      <Head>
+        <title>FlixHive - My Transaction History</title>
+      </Head>
       <div className='bg-base-100 px-4 py-8 md:px-8 md:py-12 w-full min-h-[80vh]'>
         <h1 className='text-3xl font-bold mb-4'>My Transaction History </h1>
         <div className='w-full lg:w-fit'>
