@@ -1,7 +1,7 @@
 import { updateCredit } from "@/lib/firestore-admin";
 import { auth } from "@/lib/firebase-admin";
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   try {
     const { token } = req.headers;
     console.log(token);
@@ -13,3 +13,5 @@ export default async (req, res) => {
     res.status(500).json({ error });
   }
 };
+
+export default handler;
