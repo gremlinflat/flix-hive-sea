@@ -9,7 +9,7 @@ import { useAlert } from "@/lib/alert";
 import TransactionCell from "@/components/TransactionCell";
 
 const UserTransaction = () => {
-  const { userToken } = useAuth();
+  const { userToken, userProfile, setUserProfile } = useAuth();
   const { showAlertMessage } = useAlert();
   const { data: usersHistory, mutate: mutateUsersHistory } = useSWR(
     [`/api/user/getAllTicket`, userToken],
@@ -49,6 +49,12 @@ const UserTransaction = () => {
         amount: refundAmount,
       }),
     }).then((res) => res.json());
+
+    //update user profile
+    setUserProfile({
+      ...userProfile,
+      credit: userProfile.credit + refundAmount,
+    });
 
     //mutate local data
     const newUsersHistory = usersHistory.map((ticket) => {
