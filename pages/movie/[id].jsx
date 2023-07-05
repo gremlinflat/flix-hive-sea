@@ -12,7 +12,7 @@ import RecentOrder from "@/components/RecentOrder";
 const MovieScreen = () => {
   const router = useRouter();
   const identifier = router.query.id;
-  const { data } = useSWR(`/api/movie/${identifier}`, fetcher);
+  const { data } = useSWR([`/api/movie/${identifier}`, null], fetcher);
 
   if (!data) {
     return (

@@ -5,7 +5,7 @@ import MovieContainer from "@/components/MovieContainer";
 import LoadingState from "@/components/LoadingState";
 
 const Home = () => {
-  const { data } = useSWR("/api/allMovies", fetcher);
+  const { data } = useSWR(["/api/allMovies", null], fetcher);
   return (
     <DashboardShell>
       {data ? <MovieContainer movies={data} /> : <LoadingState />}

@@ -1,10 +1,15 @@
 import React from "react";
 
-const CreditForms = ({ action, isDeposit }) => {
+const CreditForms = ({ action, isDeposit, modalId }) => {
   const handleButtonClick = () => {
-    const inputValue = document.getElementById("amount").value;
+    const inputValue = document.querySelector(`#${modalId} #amount`).value;
     if (inputValue === "") return;
-    action(inputValue);
+    if (!isDeposit) {
+      action(parseInt(inputValue) * -1);
+    } else {
+      console.log(inputValue);
+      action(inputValue);
+    }
   };
 
   return (
@@ -21,7 +26,7 @@ const CreditForms = ({ action, isDeposit }) => {
           required
         />
         <button
-          className={`btn join-item rounded-r-full ${
+          className={`btn join-item rounded-r-full font-semibold ${
             isDeposit ? "text-error" : "text-success"
           }`}
           required
