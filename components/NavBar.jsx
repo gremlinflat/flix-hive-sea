@@ -12,40 +12,16 @@ import { useAuth } from "@/lib/auth";
 import fetcher from "@/utils/fetcher";
 
 const NavBar = () => {
-  const { user, signout, signinWithGitHub, signinWithGoogle, getUserToken } =
-    useAuth();
-
-  const [userToken, setUserToken] = useState(null);
-  const [userProfile, setUserProfile] = useState(null);
-
-  useEffect(() => {
-    const fetchUserToken = async () => {
-      try {
-        const token = await getUserToken();
-        setUserToken(token);
-      } catch (error) {
-        console.error("Failed to get user token:", error);
-        // Handle token expiration or any other error
-        signout();
-      }
-    };
-
-    if (user) {
-      fetchUserToken();
-    }
-  }, [getUserToken, user]);
-
-  const { data: fetchedProfile } = useSWR(
-    user && userToken ? ["/api/userProfile", userToken] : null,
-    fetcher,
-    { revalidateOnMount: true }
-  );
-
-  useEffect(() => {
-    if (fetchedProfile) {
-      setUserProfile(fetchedProfile);
-    }
-  }, [fetchedProfile]);
+  const {
+    user,
+    signout,
+    signinWithGitHub,
+    signinWithGoogle,
+    // getUserToken,
+    userProfile,
+    userToken,
+    setUserProfile,
+  } = useAuth();
 
   const handleLogout = () => {
     signout();

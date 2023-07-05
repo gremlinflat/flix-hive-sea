@@ -13,6 +13,10 @@ const MovieScreen = () => {
   const router = useRouter();
   const identifier = router.query.id;
   const { data } = useSWR([`/api/movie/${identifier}`, null], fetcher);
+  const { data: ticketData } = useSWR(
+    [`/api/ticket/${identifier}`, null],
+    fetcher
+  );
 
   if (!data) {
     return (
@@ -76,11 +80,15 @@ const MovieScreen = () => {
         </div>
         <div className='mt-8'>
           <h2 className='lg:text-3xl text-2xl font-bold mb-4'>Seat Picker</h2>
-          <SeatPicker ticket_price={ticket_price} />
+          <SeatPicker
+            ticket_price={ticket_price}
+            movie_id={identifier}
+            ticket_data={ticketData}
+          />
         </div>
         <div className='mt-8'>
           <h2 className='lg:text-3xl text-2xl font-bold mb-4'>Recent Orders</h2>
-          <RecentOrder />
+          <RecentOrder ticket_data={ticketData} />
         </div>
       </div>
     </DashboardShell>

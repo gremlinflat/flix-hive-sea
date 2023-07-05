@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import SeatCell from "./SeatCell";
-import Alert from "./Alert";
+import { useAuth } from "@/lib/auth";
+import { useAlert } from "@/lib/alert";
 
-const SeatPicker = ({ ticket_price }) => {
+const SeatPicker = ({ ticket_price, movie_id, ticket_data }) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const { getUserToken } = useAuth();
 
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertType, setAlertType] = useState("info");
+  const { showAlertMessage } = useAlert();
 
   const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const columns = ["1", "2", "gap", "3", "4", "5", "6", "gap", "7", "8"];
@@ -15,13 +15,20 @@ const SeatPicker = ({ ticket_price }) => {
   const isSeatSelected = (row, column) => {
     return selectedSeats.includes(`${row}${column}`);
   };
+  const reservedSeats =
+    ticket_data
+      ?.filter((ticket) => ticket.status === "booked")
+      .map((ticket) => ticket.seats)
+      .flat() ?? [];
+
+  const isSeatReserved = (row, column) => {
+    return reservedSeats.includes(`${row}${column}`);
+  };
 
   const toggleSeatSelection = (row, column) => {
     const seat = `${row}${column}`;
     if (selectedSeats.length === 6 && !isSeatSelected(row, column)) {
-      setAlertMessage("Oops! You can only select up to 6 seats.");
-      setAlertType("warning");
-      setShowAlert(true);
+      showAlertMessage("Oops! You can only select up to 6 seats.", "warning");
       return;
     }
     setSelectedSeats((prevSelectedSeats) =>
@@ -31,19 +38,30 @@ const SeatPicker = ({ ticket_price }) => {
     );
   };
 
-  const handleBuyTicket = () => {
+  const handleBuyTicket = async () => {
     if (selectedSeats.length > 6) {
-      // WARNING: CANT PROCEED WITH PURCHASE
+      showAlertMessage("Oops! You can only select up to 6 seats.", "warning");
       return;
     }
 
     //do checkout
+    const userToken = await getUserToken();
+    const result = await fetch(`/api/ticket/${movie_id}`, {
+      method: "POST",
+      body: JSON.stringify({
+        seats: selectedSeats,
+        price: ticket_price,
+        total: selectedSeats.length * ticket_price,
+      }),
+      headers: new Headers({
+        "Content-Type": "application/json",
+        token: userToken,
+      }),
+    });
 
     //is it successful?
     //if yes, show success alert
-    setAlertType("success");
-    setAlertMessage("Ticket purchased successfully!");
-    setShowAlert(true);
+    showAlertMessage("Ticket purchased successfully!", "success");
 
     //if no, show error alert
     // setAlertType("error");
@@ -54,6 +72,9 @@ const SeatPicker = ({ ticket_price }) => {
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
+
+  console.log("selectedSeats", selectedSeats);
+  console.log("ticket_data", ticket_data ?? "no ticket data");
 
   return (
     <div className='w-full'>
@@ -68,15 +89,18 @@ const SeatPicker = ({ ticket_price }) => {
                 <td className='w-fit sm:px-1 sm:py-3 sm:w-12 md:px-6 text-left font-semibold'>
                   {row}
                 </td>
-                {columns.map((column, index) => (
-                  <SeatCell
-                    key={`${row}${index}`}
-                    row={row}
-                    column={column}
-                    isSeatSelected={isSeatSelected}
-                    toggleSeatSelection={toggleSeatSelection}
-                  />
-                ))}
+                {columns.map((column, index) => {
+                  return (
+                    <SeatCell
+                      key={`${row}${column}${index}`}
+                      row={row}
+                      column={column}
+                      isSeatSelected={isSeatSelected}
+                      toggleSeatSelection={toggleSeatSelection}
+                      isSeatReserved={isSeatReserved(row, column)}
+                    />
+                  );
+                })}
               </tr>
             ))}
           </tbody>
@@ -129,14 +153,6 @@ const SeatPicker = ({ ticket_price }) => {
         >
           Buy Ticket
         </button>
-        {showAlert && (
-          <Alert
-            type={alertType}
-            message={alertMessage}
-            show={showAlert}
-            onClose={handleCloseAlert}
-          />
-        )}
       </div>
     </div>
   );

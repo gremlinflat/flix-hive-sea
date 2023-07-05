@@ -1,6 +1,32 @@
 import React from "react";
 
-const SeatCell = ({ row, column, isSeatSelected, toggleSeatSelection }) => {
+const SeatCell = ({
+  row,
+  column,
+  isSeatSelected,
+  toggleSeatSelection,
+  isSeatReserved,
+}) => {
+  if (isSeatReserved) {
+    console.log("Seat is reserved", row, column);
+  }
+
+  const getCellClassName = () => {
+    if (isSeatReserved) {
+      return " bg-red-200 text-red-600 font-bold cursor-not-allowed";
+    } else if (isSeatSelected(row, column)) {
+      return " text-bold bg-secondary font-bold text-white";
+    } else {
+      return "bg-gray-300 text-gray-600 font-bold cursor-pointer";
+    }
+  };
+
+  const handleSeatClick = () => {
+    if (!isSeatReserved) {
+      toggleSeatSelection(row, column);
+    }
+  };
+
   return (
     <td
       className={`px-1 py-1 text-center ${
@@ -9,15 +35,10 @@ const SeatCell = ({ row, column, isSeatSelected, toggleSeatSelection }) => {
     >
       {column !== "gap" ? (
         <div
-          className={`${
-            isSeatSelected(row, column)
-              ? "bg-green-200 text-green-600"
-              : "bg-red-200 text-red-600"
-          } py-2 px-0 w-full sm:px-3 rounded-sm md:rounded-lg text-xs cursor-pointer flex items-center justify-center`}
-          onClick={() => toggleSeatSelection(row, column)}
+          className={`py-2 px-0 w-full sm:px-3 rounded-sm md:rounded-lg text-xs flex items-center justify-center ${getCellClassName()}`}
+          onClick={handleSeatClick}
         >
-          {row}
-          {column}
+          {isSeatReserved ? "X" : `${row}${column}`}
         </div>
       ) : (
         "|"
