@@ -174,6 +174,7 @@ const SeatPicker = ({ movie, movie_id, ticket_data, onCheckout }) => {
               : "bg-secondary"
           } ml-4 px-8 text-white font-bold py-3 rounded-lg text-lg w-fit h-fit`}
           onClick={handleBuyTicket}
+          disabled={!selectedSeats.length > 0}
         >
           Buy Ticket
         </button>
