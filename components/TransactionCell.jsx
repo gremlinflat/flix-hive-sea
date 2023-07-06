@@ -30,7 +30,7 @@ const TransactionCell = ({ ticket, onCancel }) => {
       <td className='font-semibold text-sm md:text-lg text-center'>
         {ticket.status == "booked" ? (
           <span
-            className='flex h-min min-h-0 btn btn-error py-2 px-0 sm:px-3 rounded-sm md:rounded-lg text-xs capitalize font-semibold'
+            className='flex h-min min-h-0 btn btn-error py-2 px-2 sm:px-3 rounded-sm md:rounded-lg text-xs capitalize font-semibold'
             onClick={handleCancel}
           >
             cancel
