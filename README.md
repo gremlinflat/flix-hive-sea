@@ -1,8 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FlixHive Documentation
 
 ## Getting Started
 
-First, run the development server:
+FlixHive is a web application that allows users to effortlessly browse through a collection of movies, choose a seats, and book a ticket.
+
+It is built with Next.js, React, Tailwind CSS, and powered by Firestore. This project is dedicated [Compfest 15](https://www.compfest.id) SEA Technical Challenge.
+
+## Installation
+
+First, clone this repository:
+
+```bash
+git clone https://github.com/gremlinflat/flix-hive-sea.git
+```
+
+Then, install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+Finally, create a `.env.local` file in the root directory and add the following environment variables:
+
+```bash
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+
+FIREBASE_CLIENT_EMAIL=
+FIREBASE_PRIVATE_KEY=
+FIREBASE_DATABASE_URL=
+```
+
+### Running the app
+
+To run the development server, run the following command:
 
 ```bash
 npm run dev
@@ -12,23 +46,114 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Key Features
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Authentication
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- [x] Users can sign in using their GitHub or Google accounts.
+- [x] Authenticated users can view their profile information, including credit balance and age.
+- [x] Users can sign out from the platform.
 
-## Learn More
+### Movie Catalog
 
-To learn more about Next.js, take a look at the following resources:
+- [x] Users can browse a list of available movies.
+- [x] Movie details, including title, poster, age rating, release date, and description, are displayed.
+- [x] Users can select movie seats using the Seat Picker component.
+- [x] Ticket prices are shown for each movie.
+  
+### Ticket Booking
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [x] Users can book a ticket for a movie.
+- [x] The Seat Picker component allows users to select seats for a movie.
+- [x] Available seats are displayed for selection.
+- [x] Selected seats are highlighted and can be deselected.
+- [x] The number of selected seats and the total price are updated dynamically.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Balance Top-Up and Withdrawal
 
-## Deploy on Vercel
+- [x] Users can top up their balance.
+- [x] Users can withdraw their balance.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Ticket History and Recent Orders
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [x] Users can view their ticket history.
+- [x] The Recent Orders component displays a list of recent ticket orders.
+- [x] The customer name, seat number, and order status are shown.
+- [x] User can cancel an order and the credit should be refunded.
+
+## Technical Specifications
+
+### Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Firebase](https://firebase.google.com/)
+- [DaisyUI](https://daisyui.com/)
+- [React Icons](https://react-icons.github.io/react-icons/)
+- [JS-Cookie](https://github.com/js-cookie/js-cookie)
+- [SWR](https://swr.vercel.app/)
+
+### Folder Structure
+
+``` bash
+flix-hive-sea
+├── components
+│   ├── ...
+├── lib
+│   ├── ...
+├── pages
+│   ├── ...
+├── public
+│   ├── ...
+├── styles
+│   ├── ...
+├── .env.local
+├── .gitignore
+├── next.config.js
+├── package.json
+├── README.md
+└── tailwind.config.js
+```
+
+### Data Structure
+
+#### Firestore Collections
+
+``` bash
+flix-hive-sea
+├── users
+│   ├── uid: String (auto-generated, identifier)
+│   ├── name: String
+│   ├── email: String
+│   ├── photoUrl: String
+│
+├── user-profile
+│   ├── uid: String (linked to users collection, identifier)
+│   ├── age: Number
+│   ├── balance: Number
+│
+├── movies
+│   ├──... (directly linked to COMPFESt API, no need to store in Firestore)
+│
+├── tickets
+│   ├── uid: String (auto-generated, identifier)
+│   ├── movieId: String
+│   ├── movieTitle: String
+│   ├── price: Number
+│   ├── seats: Array
+│       ├── [] (array of seat numbers)
+│   ├── status: String (default: "booked", enum ["booked", "cancelled"])
+│   ├── created_at: String (auto-generated, timestamp with ISO format)
+│   ├── total: Number (derrived, price * seats.length)
+│   ├── user_id: String (linked to users collection)
+│   ├── user_name: String (derived, user's name from users collection)
+│
+
+```
+
+## License
+
+The FlixHive project is open-source and released under the [MIT License](https://choosealicense.com/licenses/mit/).
+
+Feel free to customize the documentation according to your project's specific features, guidelines, and requirements.
