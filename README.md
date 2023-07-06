@@ -6,6 +6,9 @@ FlixHive is a web application that allows users to effortlessly browse through a
 
 It is built with Next.js, React, Tailwind CSS, and powered by Firestore. This project is dedicated [Compfest 15](https://www.compfest.id) SEA Technical Challenge.
 
+### Live Demo
+You can view the live demo of the app [here](https://flix-hive-sea.vercel.app/).
+
 ## Installation
 
 First, clone this repository:
