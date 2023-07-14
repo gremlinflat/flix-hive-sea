@@ -116,7 +116,7 @@ const NavBar = () => {
 
   return (
     <>
-      <div className='navbar bg-base-100 shadow-xl rounded-b-2xl '>
+      <div className='navbar bg-base-100 shadow-xl rounded-b-2xl pb-7'>
         <div className='flex-1'>
           <Link
             href='/'
